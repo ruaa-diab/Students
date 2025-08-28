@@ -1,0 +1,58 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Employee Search</title>-->
+<!--    <style>-->
+<!--        body { font-family: Arial, sans-serif; margin: 40px; }-->
+<!--        .search-form { margin-bottom: 30px; }-->
+<!--        input[type="text"] { padding: 8px; margin-right: 10px; width: 200px; }-->
+<!--        button { padding: 8px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }-->
+<!--        .success { color: green; }-->
+<!--        .error { color: red; }-->
+<!--        table { border-collapse: collapse; width: 100%; margin-top: 20px; }-->
+<!--        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }-->
+<!--        th { background-color: #f2f2f2; }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Employee Search</h1>-->
+
+<!--&lt;!&ndash; Search Form &ndash;&gt;-->
+<!--<div class="search-form">-->
+<!--    <form th:action="@{/api/v2/employees-search}" method="post">-->
+<!--        <input type="text" name="name" placeholder="Enter employee name" th:value="${searchTerm}" required>-->
+<!--        <button type="submit">Search</button>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Success Message &ndash;&gt;-->
+<!--<div th:if="${success}" class="success" th:text="${success}"></div>-->
+
+<!--&lt;!&ndash; Error Message &ndash;&gt;-->
+<!--<div th:if="${error}" class="error" th:text="${error}"></div>-->
+
+<!--&lt;!&ndash; Results Table &ndash;&gt;-->
+<!--<div th:if="${employees}">-->
+<!--    <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>First Name</th>-->
+<!--            <th>Last Name</th>-->
+<!--            <th>Email</th>-->
+<!--            &lt;!&ndash; Add more columns based on your Employee model &ndash;&gt;-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="employee : ${employees}">-->
+<!--            <td th:text="${employee.firstName}"></td>-->
+<!--            <td th:text="${employee.lastName}"></td>-->
+<!--            <td th:text="${employee.email}"></td>-->
+<!--            &lt;!&ndash; Add more fields based on your Employee model &ndash;&gt;-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
