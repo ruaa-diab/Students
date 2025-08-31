@@ -1,6 +1,5 @@
 package com.example.demo.Student;
 
-import jakarta.persistence.Transient;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -9,15 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.JpaSort;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -48,7 +43,7 @@ public class StudentService {
 
 
     @CacheEvict(value  ="StudentsCache, allEntries = true")
-    public void addStudent(Student std) {
+    public Student addStudent(Student std) {
         System.out.println(std);
         Optional<Student> studentByEmail=
                 this.stdrep.findStudentByEmail(std.getEmail());
@@ -57,6 +52,7 @@ public class StudentService {
         }
         this.stdrep.save(std);
 
+        return std;
     }
 
     @CacheEvict(value  ="StudentsCache, allEntries = true")

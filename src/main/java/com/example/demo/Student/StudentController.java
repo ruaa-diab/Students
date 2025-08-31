@@ -35,13 +35,14 @@ public class StudentController {
     }
 
     @PostMapping
-    public void AddNewStudent(@RequestBody Student std) {
+    public ResponseEntity<?>  AddNewStudent(@RequestBody Student std) {
         try {
-            this.studentService.addStudent(std);
+            Student savedStudent = this.studentService.addStudent(std);
+            return ResponseEntity.ok(savedStudent);
 
 
         } catch (Exception m) {
-            ResponseEntity.badRequest().body(m.getMessage());
+           return ResponseEntity.badRequest().body(m.getMessage());
 
         }
 

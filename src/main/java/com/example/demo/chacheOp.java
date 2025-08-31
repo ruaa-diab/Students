@@ -1,4 +1,4 @@
-package com.example.demo;
+//package com.example.demo;
 
 //public class chacheOp {
 
@@ -278,12 +278,7 @@ testing with spring boot:
 
 
 7.The application-integrationtest.properties file:
-
-propertiesspring.datasource.url = jdbc:h2:mem:test ---->idont put it i override with it.
-spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.H2Dialect-->already exisists
-
-jdbc:h2:mem:test: Uses H2 in-memory database (data disappears after test ends)
-The dialect tells Hibernate how to generate SQL for H2 database
+in here u make other propertirs file and put other datbase to deal with tets. the same stuff but diffrent name .
 
 
 8.
@@ -331,6 +326,8 @@ public void givenEmployees_whenGetEmployees_thenStatus200() throws Exception {
 
 so i am sending the request and what iam excpected to see as a result
 
+so when i am sending the request get i expect in return so i use [0]/[1] but when i sent post with json body it depends
+ifi return it so i just have to be careful what it returns
 ------------------------------------------------------------------------------------------------------------------------------
 
 
