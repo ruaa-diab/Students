@@ -236,6 +236,104 @@ Create an aspect class → This is where you tell Spring: “whenever you see @L
 Write your logic → Measure start time, call the method, measure end time, print result.
 
 Use it → Just put @LogExecutionTime above any method you want to measure.
+------------------------------------------------------------------------------------------------------------------------------------------------------
+testing with spring boot:
+1.we add dependences :
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <scope>test</scope>
+    <version>3.3.2</version>
+</dependency>
+<dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <scope>test</scope>
+</dependency>     we include data base for integration testing but for unit testing we dont need it
+
+
+
+2.Integration tests: load the whole Spring Boot context (controllers, services, repositories, database)
+ and check everything works together.
+
+
+
+ 3.how to do it :
+ 1.@ExtendWith(SpringExtension.class)
+ this tells junit5 to use spring testing framework .
+
+ 2.@SpringBootTest( ---> this starts all your spring application
+ (service /controller/..... for testing)
+  webEnvironment = SpringBootTest.WebEnvironment.MOCK,-->creates a fake web environment
+  instead of a real web server.
+  classes = Application.class)--->tells spring which main application class to use as the starting point
+
+  3.@AutoConfigureMockMvc:
+  This automatically sets up MockMvc, which lets you simulate HTTP requests to your controllers without starting a real web server.
+
+  4.@TestPropertySource(locations = "classpath:application-integrationtest.properties")
+  this tells sring to use special properties file just for testing which override
+  the normal properities. so it will not use the real one
+
+
+
+7.The application-integrationtest.properties file:
+
+propertiesspring.datasource.url = jdbc:h2:mem:test ---->idont put it i override with it.
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.H2Dialect-->already exisists
+
+jdbc:h2:mem:test: Uses H2 in-memory database (data disappears after test ends)
+The dialect tells Hibernate how to generate SQL for H2 database
+
+
+8.
+a.i do controllerFor integration test :
+we put in it
+ A.MockMvc-->@Autowired
+private MockMvc mvc;
+MockMvc is your tool for simulating HTTP requests (GET, POST, etc.) to test your REST endpoints.
+
+B.the repository -->@Autowired
+private EmployeeRepository repository;
+This gives you direct access to your repository so you can set up test data or verify database operations.
+
+
+C. ObjectMapper ------> so i dont have to write the json file myself i will make the object and it will convert
+
+D.and set up to empty the repository(database @BeforeEach).:
+@BeforeEach
+    void setUp() {
+        employeeRepository.deleteAll(); // Clean database before each test
+    }
+
+
+F.and that you create DATA and save it
+private Employee createTestEmployee(String name, String email, String department) {
+        Employee employee = new Employee(name, email, department);
+        return employeeRepository.save(employee);
+    }
+
+
+ E.  and lastly you do @Test
+ ******import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+ this is for get.
+ after adding the dats @Test
+public void givenEmployees_whenGetEmployees_thenStatus200() throws Exception {
+    createTestEmployee("bob"); ---> test data in the data base.
+
+    mvc.perform(get("/api/employees")--->simulates a get request
+      .contentType(MediaType.APPLICATION_JSON))-->content type of the request.
+      .andExpect(status().isOk())---->verifies th eresponse statuse
+      .andExpected(content(
+      .contentTypeCompatibleWith(MediaType.APPLICATION_JSON)))--->verifies response is json
+      .andExpected(jsonPath("$[0].name", is("bob")));----->verifies the first employee name is boob
+}
+
+so i am sending the request and what iam excpected to see as a result
+
+------------------------------------------------------------------------------------------------------------------------------
+
+
 
      */
 
