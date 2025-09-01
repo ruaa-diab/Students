@@ -397,8 +397,14 @@ so methods in repository /
 
  3./and then i write test and i use methods inside the manger(the entitytestmanager).
  ----------------------------------------------------------------------------------------------------------------------------------
+unit testing:
+in this test we start with @ExtendWith(SpringExtension.class) and @WebMvcTest(YourController.class)
 
+2.and then @Autowired private MockMvc mockMvc;  @MockBean // Mock the  private YourService yourService;
+
+3. and then i implement tests
      */
+
 
 
 

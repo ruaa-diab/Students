@@ -33,7 +33,6 @@ Optional<Student> findStudentByEmail(String email);
     // Repository
     @Query("SELECT s FROM Student s WHERE s.name LIKE %:sub%")
     @QueryHints(@QueryHint(name = "org.hibernate.cacheable", value = "true"))
-
     List<Student> findByNameContaining(@Param("sub") String sub, Sort sort);
 
 
