@@ -1,3 +1,5 @@
+
+
 //package com.example.demo;
 
 //public class chacheOp {
@@ -329,8 +331,74 @@ so i am sending the request and what iam excpected to see as a result
 so when i am sending the request get i expect in return so i use [0]/[1] but when i sent post with json body it depends
 ifi return it so i just have to be careful what it returns
 ------------------------------------------------------------------------------------------------------------------------------
+5. Test Configuration With @TestConfiguration: ****this alone doesnt work*****
+****and it is a way of testing the service class without data base or anything
+it is just service.
 
 
+1.so  i create class with fake data and put it in a list  overrides the service class
+
+2.and use @testConfiguration (on the class) and then @Bean @Primary and then make a method that returns
+instance of the real service and keep it open like a mini class
+ and put the fake data and the methods in it
+
+3.and then i start @Override the method
+
+4.and then i make other class and start it with @ExtendWith(SpringExtension.class) and @Import(theclass i put the fake data in.class)
+
+5.and then @Autowired another instance of the real service class to be th e fake one so and i wont need a
+constructor because it will understand that this is the same one
+i get back from the method i did in the method in the first class
+because it has @Bean above it .
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Approach 1: @TestConfiguration + @MockITOBean
+so here i use 1. @ExtendWith(SpringExtension.class) @SpringBootTest above the class
+
+ 2.then do mini class config in it and above
+ this mini class @TestConfiguration
+
+ 3.and then i put @Bean @Primary and under it i put a method to return a new instance
+ of the real service with mock repo and then i use @MockBean to actually mock the repo
+ and @Autowired above the instance of service ad because i have a bean it will search
+ for it and take it and because of the annotation of mock it will replace inside the service
+ with this one
+
+4.and then i am free to do tests using @test
+
+----------------------------------------------------------------------------------------------------------------------
+ Approach 2: @MockBean alone
+ 1.but in here i start with @ExtendWith(SpringExtension.class) @SpringBootTest above the class
+
+ 2.and then i mock the repo using @MockBean and again
+
+ 3.use @Autowired above the instance of the real service
+ and because of the mock annotation it will understand to
+ replace the one inside the service with the mock
+
+ 4.and then i am free to o the tests
+
+
+ /**********thf first appraoch uses fake repo and i
+  gotta redo theservice class and the second approch
+  it uses real service but with mocked /fake repo and
+  thats it
+-----------------------------------------------------------------------------------------------------------------------------------------
+7. Integration Testing With @DataJpaTest
+
+Test database: Temporary H2 that gets created/
+destroyed for each test
+
+so this testing is to test database queres
+so methods in repository /
+
+ 1.so first we do class and anotate it with @ExtendWith(SpringExtension.class)and @DataJpaTest
+
+ 2.and in it  i put 2 objects 1 TestEntityManger and the second object of real repository
+
+ 3./and then i write test and i use methods inside the manger(the entitytestmanager).
+ ----------------------------------------------------------------------------------------------------------------------------------
 
      */
+
+
 

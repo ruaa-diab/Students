@@ -18,8 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -77,6 +77,18 @@ public class StudentControllerIntegrationTest {
                 .andExpect(jsonPath("$.name", is("rose")))
                 .andExpect(jsonPath("$.email", is("diabroa@gmail.com")))
                 .andExpect(jsonPath("$.dop", is("2002-09-07")));
+    }
+
+
+
+    @Test
+    public void deletingAstudent() throws Exception {
+        Student std=this.creatTestStudent("ruaa","ruaadiab@gmail.com",LocalDate.of(2002,9,7));
+        long id=std.getId();
+        this.mockMvc.perform(delete("/api/v1/student/{id}",id))
+                .andExpect(status().isOk());
+        assertEquals(0,studentRep.count());
+
     }
 
 

@@ -26,6 +26,7 @@ import java.util.Set;
 
 //so autowired knows to make instance out of thisssssssss
 public class StudentService {
+
     private final studentRepository stdrep;
 
 
@@ -42,7 +43,8 @@ public class StudentService {
     }
 
 
-    @CacheEvict(value  ="StudentsCache, allEntries = true")
+    @CacheEvict(value="studentsCache", allEntries = true)
+
     public Student addStudent(Student std) {
         System.out.println(std);
         Optional<Student> studentByEmail=
@@ -55,9 +57,10 @@ public class StudentService {
         return std;
     }
 
-    @CacheEvict(value  ="StudentsCache, allEntries = true")
+    @CacheEvict(value="studentsCache", allEntries = true)
 
-    public void delete(Long studentId) {
+
+    public void delete(long studentId) {
 
 
             boolean exists=this.stdrep.existsById(studentId);
@@ -75,9 +78,10 @@ public class StudentService {
 
 
     @Transactional
-    @CacheEvict(value  ="StudentsCache, allEntries = true")
+    @CacheEvict(value="studentsCache", allEntries = true)
 
-    public void update(Long studentId,String name,String email) {
+
+    public void update(long studentId,String name,String email) {
         Student std=this.stdrep.findById(studentId).orElseThrow(()->
                 new IllegalStateException("this is has no student "));
 
